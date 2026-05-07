@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison — Design System v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#FAF8F3;--surface:#F4F1EB;--surface2:#EDE9E0;
+  --ink:#1A1918;--ink2:#4A4744;--ink3:#8A8480;
+  --border:#E2DDD5;--border2:#CEC9BE;
+  --gold:#B8955A;--gold-l:#D4B07A;--gold-p:#F0E6D3;
+  --success:#4A7C59;--error:#9B3A3A;
+  --fd:'Playfair Display',Georgia,serif;
+  --fu:'DM Sans',system-ui,sans-serif;
+  --r-sm:4px;--r-md:8px;--r-lg:12px;--r-full:9999px;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--fu);background:var(--canvas);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 32px}
+.sec{padding:80px 0;border-bottom:1px solid var(--border)}
+.sec:last-of-type{border-bottom:none}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.sec-title{font-family:var(--fd);font-size:34px;font-weight:400;margin-bottom:12px;line-height:1.15}
+.sec-desc{font-size:15px;color:var(--ink2);max-width:560px;line-height:1.75;margin-bottom:40px}
+.sub{font-size:11px;letter-spacing:.10em;text-transform:uppercase;font-weight:500;color:var(--ink3);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.row{display:flex;flex-wrap:wrap;align-items:flex-start;gap:16px;margin-bottom:32px}
+.col{display:flex;flex-direction:column;gap:16px}
+.tag{font-size:10px;font-weight:500;letter-spacing:.06em;color:var(--ink3);margin-top:8px;text-align:center}
+.sep{height:1px;background:var(--border);margin:32px 0}
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:100;background:rgba(250,248,243,.92);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.hdr-i{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 32px;max-width:1160px;margin:0 auto}
+.hdr-nav{display:flex;gap:32px;list-style:none}
+.hdr-nav a{font-size:13px;letter-spacing:.04em;color:var(--ink2);position:relative;transition:color .12s}
+.hdr-nav a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--ink);transition:width .22s var(--ease)}
+.hdr-nav a:hover{color:var(--ink)}.hdr-nav a:hover::after{width:100%}
+.hdr-logo{font-family:var(--fd);font-size:22px;font-weight:500;letter-spacing:.06em;position:absolute;left:50%;transform:translateX(-50%)}
+.hdr-acts{display:flex;align-items:center;gap:20px}
+.hdr-ico{width:20px;height:20px;color:var(--ink2);transition:color .12s;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.hdr-ico:hover{color:var(--ink)}
+.cart-b{position:relative}
+.cart-b::after{content:'2';position:absolute;top:-6px;right:-8px;background:var(--gold);color:#fff;font-size:9px;font-weight:600;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+/* COVER */
+.cover{padding:96px 0 80px;border-bottom:1px solid var(--border)}
+.cover-i{max-width:1160px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.cover-h{font-family:var(--fd);font-size:52px;font-weight:400;line-height:1.08;margin-bottom:24px}
+.cover-h em{font-style:italic;color:var(--ink2)}
+.cover-b{font-size:15px;color:var(--ink2);line-height:1.75;margin-bottom:32px;max-width:420px}
+.cover-meta{display:flex;gap:32px}
+.meta-v{font-family:var(--fd);font-size:22px;font-weight:400}
+.meta-l{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.cover-pal{display:grid;grid-template-rows:repeat(5,1fr);height:400px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border)}
+.pal-sw{flex:1;display:flex;align-items:flex-end;padding:16px 20px;font-size:11px;font-weight:500;letter-spacing:.04em;transition:flex .4s var(--ease)}
+.pal-sw:hover{flex:2}
+/* COLORS */
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px}
+.csw{border-radius:var(--r-md);overflow:hidden;border:1px solid transparent}
+.csw.lt{border-color:var(--border)}
+.cb{height:80px;transition:transform .22s var(--ease)}
+.csw:hover .cb{transform:scaleY(1.05);transform-origin:bottom}
+.ci{padding:12px;background:var(--canvas)}
+.cn{font-size:11px;font-weight:500;color:var(--ink);display:block;margin-bottom:2px}
+.ch{font-size:11px;color:var(--ink3);font-family:monospace}
+.ct{font-size:10px;color:var(--gold);margin-top:2px;display:block;font-family:monospace}
+/* TYPE */
+.ts{padding:24px 0;border-bottom:1px solid var(--border);display:grid;grid-template-columns:100px 1fr 120px;gap:24px;align-items:baseline}
+.ts:last-child{border-bottom:none}
+.tm{font-size:11px;color:var(--ink3);letter-spacing:.04em}
+.tm strong{display:block;color:var(--ink2);margin-bottom:2px;font-weight:500}
+.tt{font-size:10px;font-family:monospace;color:var(--gold);align-self:center;text-align:right}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--fu);font-weight:400;letter-spacing:.08em;text-transform:uppercase;border-radius:var(--r-md);cursor:pointer;transition:background .12s,color .12s,border-color .12s,transform .12s;position:relative;overflow:hidden;white-space:nowrap;border:1px solid transparent;text-decoration:none}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn-sm{font-size:10px;padding:8px 16px;height:34px}
+.btn-md{font-size:11px;padding:12px 24px;height:44px}
+.btn-lg{font-size:12px;padding:16px 32px;height:52px}
+.btn-xl{font-size:12px;padding:20px 40px;height:60px}
+.btn-p{background:var(--ink);color:var(--canvas);border-color:var(--ink)}
+.btn-p:hover{background:var(--ink2);border-color:var(--ink2)}
+.btn-s{background:var(--canvas);color:var(--ink);border-color:var(--border2)}
+.btn-s:hover{background:var(--surface);border-color:var(--ink)}
+.btn-g{background:transparent;color:var(--ink);border-color:transparent}
+.btn-g:hover{background:var(--surface)}
+.btn-gold{background:var(--gold);color:#fff;border-color:var(--gold)}
+.btn-gold:hover{background:#A07A40;border-color:#A07A40}
+.btn-og{background:transparent;color:var(--gold);border-color:var(--gold)}
+.btn-og:hover{background:var(--gold-p)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;pointer-events:none}
+.btn-ld{color:transparent;pointer-events:none}
+.btn-ld::before{content:'';position:absolute;width:16px;height:16px;border:1.5px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-ico{width:44px;height:44px;padding:0}
+.btn-rnd{border-radius:50%}
+.chip{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.04em;border-radius:var(--r-full);padding:4px 10px;border:1px solid;font-weight:400}
+.chip-df{background:var(--surface);color:var(--ink2);border-color:var(--border)}
+.chip-gd{background:var(--gold-p);color:var(--gold);border-color:var(--gold-l)}
+.chip-ik{background:var(--ink);color:var(--canvas);border-color:var(--ink)}
+.chip-ok{background:#EBF3EE;color:var(--success);border-color:#B3D4BC}
+.chip-er{background:#F8ECEC;color:var(--error);border-color:#E0B3B3}
+/* FORMS */
+.field{display:flex;flex-direction:column;gap:8px}
+.flabel{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--ink2)}
+.freq{color:var(--gold);margin-left:2px}
+.input{font-family:var(--fu);font-size:15px;color:var(--ink);background:var(--canvas);border:1px solid var(--border2);border-radius:var(--r-md);padding:12px 16px;height:48px;width:100%;transition:border-color .12s,box-shadow .12s,background .12s;outline:none;-webkit-appearance:none}
+.input::placeholder{color:var(--ink3)}
+.input:hover{border-color:var(--ink3)}
+.input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(26,25,24,.06);background:#fff}
+.input.ok{border-color:var(--success)}
+.input.er{border-color:var(--error);box-shadow:0 0 0 3px rgba(155,58,58,.08)}
+.iwi{position:relative}
+.iwi .input{padding-right:44px}
+.iico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--ink3);pointer-events:none;font-size:15px}
+.ta{height:auto;min-height:100px;resize:vertical;padding-top:12px;padding-bottom:12px;line-height:1.6}
+.fhint{font-size:11px;color:var(--ink3);line-height:1.5}
+.ferr{font-size:11px;color:var(--error)}
+.selw{position:relative}
+.selw::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%) rotate(45deg);width:6px;height:6px;border-right:1.5px solid var(--ink3);border-bottom:1.5px solid var(--ink3);pointer-events:none;margin-top:-2px}
+.selw .input{padding-right:40px;cursor:pointer}
+.ck-g{display:flex;flex-direction:column;gap:12px}
+.ck-i{display:flex;align-items:center;gap:12px;cursor:pointer;font-size:13px;color:var(--ink2);transition:color .12s}
+.ck-i:hover{color:var(--ink)}
+.ck-b{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s;background:var(--canvas)}
+.ck-i.on .ck-b{background:var(--ink);border-color:var(--ink)}
+.ck-i.on .ck-b::after{content:'';width:9px;height:5px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px)}
+.rd-c{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:50%;flex-shrink:0;transition:all .12s;background:var(--canvas)}
+.ck-i.on .rd-c{border-color:var(--ink);border-width:5px}
+.sz-g{display:flex;flex-wrap:wrap;gap:8px}
+.sz{min-width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:13px;letter-spacing:.04em;border:1px solid var(--border2);border-radius:var(--r-sm);cursor:pointer;transition:all .12s;padding:0 8px;background:var(--canvas);color:var(--ink2)}
+.sz:hover{border-color:var(--ink);color:var(--ink)}
+.sz.on{background:var(--ink);border-color:var(--ink);color:var(--canvas)}
+.sz.off{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.qty{display:flex;align-items:center;border:1px solid var(--border2);border-radius:var(--r-md);overflow:hidden;width:fit-content}
+.qty-btn{width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--ink2);cursor:pointer;transition:background .12s,color .12s;font-weight:300;background:var(--canvas)}
+.qty-btn:hover{background:var(--surface);color:var(--ink)}
+.qty-v{width:48px;text-align:center;font-size:15px;border-left:1px solid var(--border);border-right:1px solid var(--border);height:42px;line-height:42px;color:var(--ink);background:var(--canvas)}
+/* NAV */
+.mnav{background:var(--canvas);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.mnav-b{display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 32px;height:56px;gap:32px}
+.mni{font-size:13px;letter-spacing:.05em;color:var(--ink2);cursor:pointer;padding:8px 0;border-bottom:1.5px solid transparent;transition:all .12s}
+.mni.on{color:var(--ink);border-bottom-color:var(--ink)}
+.mni:hover{color:var(--ink)}
+.mlogo{font-family:var(--fd);font-size:20px;font-weight:500;letter-spacing:.06em;margin-right:auto;color:var(--ink)}
+.mdrop{display:grid;grid-template-columns:1fr 1fr 1fr 200px;gap:32px;padding:32px;background:var(--canvas)}
+.mcl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.ml{display:block;font-size:13px;color:var(--ink2);padding:8px 0;cursor:pointer;transition:color .12s}
+.ml:hover{color:var(--ink)}
+.med{background:var(--surface2);border-radius:var(--r-md);padding:20px;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px;position:relative;overflow:hidden}
+.med-bg{position:absolute;inset:0;background:linear-gradient(160deg,#E8DDD0 0%,#C5B39A 40%,#A89070 100%)}
+.med-c{position:relative;z-index:1}
+.med-el{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:4px}
+.med-h{font-family:var(--fd);font-size:20px;font-weight:400;color:#fff;line-height:1.2;margin-bottom:16px;font-style:italic}
+.med-cta{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:8px;cursor:pointer}
+.med-cta::after{content:'→'}
+.mbnav{background:var(--canvas);border-top:1px solid var(--border);border-radius:var(--r-lg);display:flex;align-items:center;padding:12px 16px 8px;gap:8px;width:375px;border:1px solid var(--border)}
+.mb-i{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:8px 0;transition:color .12s;color:var(--ink3)}
+.mb-i.on{color:var(--ink)}.mb-i:hover{color:var(--ink2)}
+.mb-ico{width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:18px;position:relative}
+.notif{position:absolute;top:0;right:-2px;width:8px;height:8px;background:var(--gold);border-radius:50%;border:1.5px solid var(--canvas)}
+.mb-l{font-size:10px;letter-spacing:.04em}
+.bc{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink3)}
+.bci{cursor:pointer;transition:color .12s}.bci:hover{color:var(--ink)}
+.bcs{color:var(--border2)}.bci.cur{color:var(--ink);cursor:default}
+/* PRODUCT CARDS */
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.pc{display:flex;flex-direction:column;background:var(--canvas);cursor:pointer}
+.pi{position:relative;overflow:hidden;background:var(--surface);aspect-ratio:3/4}
+.pph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:20px;font-style:italic;color:var(--border2);letter-spacing:.06em;transition:transform .4s var(--ease)}
+.pc:hover .pph{transform:scale(1.04)}
+.pbadge{position:absolute;top:12px;left:12px;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:var(--r-sm);z-index:1}
+.b-new{background:var(--ink);color:var(--canvas)}
+.b-sale{background:var(--gold);color:#fff}
+.b-sold{background:var(--surface2);color:var(--ink2)}
+.pwish{position:absolute;top:12px;right:12px;width:34px;height:34px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(-4px);transition:opacity .22s,transform .22s var(--ease);font-size:14px;color:var(--ink2);border:1px solid var(--border);z-index:2}
+.pc:hover .pwish{opacity:1;transform:translateY(0)}
+.pwish:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pwish.on{background:var(--gold-p);color:var(--gold);border-color:var(--gold-l)}
+.pqa{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:#fff;transform:translateY(100%);transition:transform .22s var(--ease);z-index:2}
+.pc:hover .pqa{transform:translateY(0)}
+.qa-l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.qa-sz{display:flex;gap:4px}
+.qa-s{flex:1;height:32px;display:flex;align-items:center;justify-content:center;font-size:11px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .12s;color:var(--ink2);background:var(--canvas)}
+.qa-s:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pinfo{padding:16px 0 8px;flex:1}
+.pbrand{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--ink3);margin-bottom:4px}
+.pname{font-family:var(--fd);font-size:15px;font-weight:400;color:var(--ink);line-height:1.3;margin-bottom:12px}
+.ppricing{display:flex;align-items:baseline;gap:12px}
+.pprice{font-size:13px;color:var(--ink)}
+.porig{font-size:13px;color:var(--ink3);text-decoration:line-through}
+.psale{color:var(--error)}
+.pdots{display:flex;gap:6px;margin-top:12px}
+.dot{width:14px;height:14px;border-radius:50%;cursor:pointer;border:1.5px solid transparent;transition:border-color .12s;outline:1px solid var(--border);outline-offset:1px}
+.dot.on{border-color:var(--ink);outline-color:var(--ink)}
+/* TRUST */
+.tbar{display:flex;gap:4px}
+.ti{flex:1;display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--surface);border-radius:var(--r-md);border:1px solid var(--border)}
+.tico{width:36px;height:36px;background:var(--gold-p);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:var(--gold)}
+.ttitle{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px;line-height:1.2}
+.tsub{font-size:11px;color:var(--ink3);line-height:1.4}
+.stars{display:flex;gap:2px}
+.star{color:var(--gold);font-size:13px}
+.star.mt{color:var(--border2)}
+/* NEWSLETTER */
+.nl{background:var(--ink);border-radius:var(--r-lg);padding:48px;display:flex;align-items:center;gap:48px}
+.nl-t{flex:1}
+.nl-ey{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-l);margin-bottom:8px}
+.nl-h{font-family:var(--fd);font-size:22px;font-weight:400;color:#fff;line-height:1.3;margin-bottom:8px}
+.nl-s{font-size:13px;color:rgba(255,255,255,.5)}
+.nl-f{flex:1;display:flex;gap:12px}
+.nl-i{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--r-md);height:48px;padding:0 16px;font-family:var(--fu);font-size:13px;color:#fff;outline:none;transition:border-color .12s,background .12s}
+.nl-i::placeholder{color:rgba(255,255,255,.35)}
+.nl-i:focus{border-color:var(--gold-l);background:rgba(255,255,255,.12)}
+/* CHECKOUT */
+.cof{display:grid;grid-template-columns:1fr 360px;gap:40px;padding:32px;background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border)}
+.co-st{font-family:var(--fd);font-size:20px;font-weight:400;color:var(--ink);padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ot{font-family:var(--fd);font-size:20px;font-weight:400;color:var(--ink);padding-bottom:16px;border-bottom:1px solid var(--border)}
+.oi{display:flex;gap:16px;align-items:flex-start}
+.oimg{width:72px;height:90px;background:var(--surface2);border-radius:var(--r-sm);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-style:italic;font-size:13px;color:var(--border2)}
+.on2{font-size:13px;font-family:var(--fd);color:var(--ink);margin-bottom:4px;line-height:1.3}
+.om{font-size:11px;color:var(--ink3)}
+.opr{font-size:13px;color:var(--ink)}
+.otots{border-top:1px solid var(--border);padding-top:16px;display:flex;flex-direction:column;gap:8px}
+.or{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2)}
+.otr{display:flex;justify-content:space-between;font-size:15px;font-weight:500;color:var(--ink);padding-top:8px;border-top:1px solid var(--border)}
+/* SPACING */
+.spr{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.spi{display:flex;flex-direction:column;align-items:center;gap:8px}
+.spb{background:var(--gold-p);border:1px solid var(--gold-l);border-radius:var(--r-sm)}
+.spl{font-size:10px;font-family:monospace;color:var(--ink3)}
+/* FOOTER */
+.ft{background:var(--ink);padding:20px 0;margin-top:80px}
+.ft-i{max-width:1160px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between}
+.ft-logo{font-family:var(--fd);font-size:20px;color:#fff;letter-spacing:.08em}
+.ft-m{font-size:11px;color:rgba(255,255,255,.4);letter-spacing:.04em}
+.ft-g{color:var(--gold-l)}
+@media(max-width:900px){
+  .cover-i,.g2,.g4,.mdrop{grid-template-columns:1fr}
+  .pg,.g3{grid-template-columns:1fr 1fr}
+  .cof{grid-template-columns:1fr}
+  .nl{flex-direction:column;gap:24px}
+  .tbar{flex-direction:column}
+  .hdr-nav{display:none}
+  .wrap{padding:0 20px}
+  .hdr-i{padding:0 20px}
+  .cover-i{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+<div class="hdr-i">
+  <nav><ul class="hdr-nav">
+    <li><a href="#">New In</a></li>
+    <li><a href="#">Collections</a></li>
+    <li><a href="#">Ready-to-Wear</a></li>
+    <li><a href="#">Accessories</a></li>
+  </ul></nav>
+  <div class="hdr-logo">Maison</div>
+  <div class="hdr-acts">
+    <div class="hdr-ico">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M17 17l-4-4"/></svg>
+    </div>
+    <div class="hdr-ico">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 10a4 4 0 100-8 4 4 0 000 8z"/><path d="M1 17c0-3.31 3.58-6 8-6s8 2.69 8 6"/></svg>
+    </div>
+    <div class="hdr-ico cart-b">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 3h14l-1.5 9H3.5L2 3z"/><path d="M6 3V2a3 3 0 016 0v1"/></svg>
+    </div>
+  </div>
+</div>
+</header>
+
+<div class="cover">
+<div class="cover-i">
+  <div>
+    <p class="eyebrow">Design System — v1.0</p>
+    <h1 class="cover-h">Maison<br><em>Component</em><br>Library</h1>
+    <p class="cover-b">A minimalist-luxury design system for women's fashion e-commerce. Built for conversion, tuned for elegance. Every token, component and pattern in one place.</p>
+    <div class="cover-meta">
+      <div><div class="meta-v">42</div><div class="meta-l">Components</div></div>
+      <div><div class="meta-v">28</div><div class="meta-l">Tokens</div></div>
+      <div><div class="meta-v">WCAG AA</div><div class="meta-l">Accessible</div></div>
+    </div>
+  </div>
+  <div>
+    <div class="cover-pal">
+      <div class="pal-sw" style="background:#FAF8F3;color:#8A8480">Canvas — #FAF8F3</div>
+      <div class="pal-sw" style="background:#E2DDD5;color:#4A4744">Stone — #E2DDD5</div>
+      <div class="pal-sw" style="background:#8A8480;color:#FAF8F3">Ash — #8A8480</div>
+      <div class="pal-sw" style="background:#B8955A;color:#fff">Gold — #B8955A</div>
+      <div class="pal-sw" style="background:#1A1918;color:#FAF8F3">Ink — #1A1918</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- COLOUR -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">01 — Foundation</p>
+  <h2 class="sec-title">Colour Palette</h2>
+  <p class="sec-desc">Warm neutrals with a restrained gold accent. The palette lets product imagery breathe — never competing with the garment.</p>
+  <p class="sub">Neutral Foundation</p>
+  <div class="cg" style="margin-bottom:32px">
+    <div class="csw lt"><div class="cb" style="background:#FAF8F3"></div><div class="ci"><span class="cn">Canvas</span><span class="ch">#FAF8F3</span><span class="ct">--canvas</span></div></div>
+    <div class="csw lt"><div class="cb" style="background:#F4F1EB"></div><div class="ci"><span class="cn">Surface</span><span class="ch">#F4F1EB</span><span class="ct">--surface</span></div></div>
+    <div class="csw lt"><div class="cb" style="background:#EDE9E0"></div><div class="ci"><span class="cn">Surface 2</span><span class="ch">#EDE9E0</span><span class="ct">--surface2</span></div></div>
+    <div class="csw lt"><div class="cb" style="background:#E2DDD5"></div><div class="ci"><span class="cn">Border</span><span class="ch">#E2DDD5</span><span class="ct">--border</span></div></div>
+    <div class="csw"><div class="cb" style="background:#8A8480"></div><div class="ci"><span class="cn">Ash</span><span class="ch">#8A8480</span><span class="ct">--ink3</span></div></div>
+    <div class="csw"><div class="cb" style="background:#4A4744"></div><div class="ci"><span class="cn">Slate</span><span class="ch">#4A4744</span><span class="ct">--ink2</span></div></div>
+    <div class="csw"><div class="cb" style="background:#1A1918"></div><div class="ci"><span class="cn">Ink</span><span class="ch">#1A1918</span><span class="ct">--ink</span></div></div>
+  </div>
+  <p class="sub">Gold Accent System</p>
+  <div class="cg" style="margin-bottom:32px">
+    <div class="csw lt"><div class="cb" style="background:#F0E6D3"></div><div class="ci"><span class="cn">Gold Pale</span><span class="ch">#F0E6D3</span><span class="ct">--gold-p</span></div></div>
+    <div class="csw lt"><div class="cb" style="background:#D4B07A"></div><div class="ci"><span class="cn">Gold Light</span><span class="ch">#D4B07A</span><span class="ct">--gold-l</span></div></div>
+    <div class="csw"><div class="cb" style="background:#B8955A"></div><div class="ci"><span class="cn">Gold</span><span class="ch">#B8955A</span><span class="ct">--gold</span></div></div>
+    <div class="csw"><div class="cb" style="background:#8A6A2A"></div><div class="ci"><span class="cn">Gold Deep</span><span class="ch">#8A6A2A</span><span class="ct">hover state</span></div></div>
+  </div>
+  <p class="sub">Semantic</p>
+  <div class="cg">
+    <div class="csw lt"><div class="cb" style="background:#EBF3EE"></div><div class="ci"><span class="cn">Success BG</span><span class="ch">#EBF3EE</span></div></div>
+    <div class="csw"><div class="cb" style="background:#4A7C59"></div><div class="ci"><span class="cn">Success</span><span class="ch">#4A7C59</span><span class="ct">--success</span></div></div>
+    <div class="csw lt"><div class="cb" style="background:#F8ECEC"></div><div class="ci"><span class="cn">Error BG</span><span class="ch">#F8ECEC</span></div></div>
+    <div class="csw"><div class="cb" style="background:#9B3A3A"></div><div class="ci"><span class="cn">Error</span><span class="ch">#9B3A3A</span><span class="ct">--error</span></div></div>
+  </div>
+</div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">02 — Typography</p>
+  <h2 class="sec-title">Type Scale</h2>
+  <p class="sec-desc">Playfair Display brings editorial refinement to display contexts. DM Sans handles UI and body with clarity and warmth — Zara efficiency meets Cuyana elegance.</p>
+  <div class="g2" style="margin-bottom:40px">
+    <div style="padding:32px;background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border)">
+      <p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500">Display — Playfair Display</p>
+      <p style="font-family:var(--fd);font-size:42px;line-height:1.1;font-weight:400;color:var(--ink);margin-bottom:12px">The art of<br><em>effortless</em><br>elegance.</p>
+      <p style="font-size:11px;color:var(--ink3)">400 / 500 / 600 · Italic variant · Premium serif personality</p>
+    </div>
+    <div style="padding:32px;background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border)">
+      <p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500">UI / Body — DM Sans</p>
+      <p style="font-size:15px;line-height:1.75;color:var(--ink2);margin-bottom:16px">Beautifully crafted from sustainable materials, this piece is designed to move with you — and last a lifetime.</p>
+      <p style="font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:var(--ink);margin-bottom:12px">New Collection — Spring 2025</p>
+      <p style="font-size:11px;color:var(--ink3)">300 / 400 / 500 · Optical sizing 9–40 · Exceptional legibility</p>
+    </div>
+  </div>
+  <p class="sub">Display Scale — Playfair Display</p>
+  <div style="margin-bottom:40px">
+    <div class="ts"><div class="tm"><strong>D1 / Hero</strong>52px · 400</div><div style="font-family:var(--fd);font-size:52px;font-weight:400;line-height:1.05;color:var(--ink)">The New Season</div><div class="tt">--text-hero</div></div>
+    <div class="ts"><div class="tm"><strong>D2 / H1</strong>44px · 400</div><div style="font-family:var(--fd);font-size:44px;font-weight:400;line-height:1.1;color:var(--ink)">Ready-to-Wear</div><div class="tt">--text-4xl</div></div>
+    <div class="ts"><div class="tm"><strong>D3 / H2</strong>34px · 400</div><div style="font-family:var(--fd);font-size:34px;font-weight:400;line-height:1.15;color:var(--ink)">Curated Editorials</div><div class="tt">--text-3xl</div></div>
+    <div class="ts"><div class="tm"><strong>D4 / H3</strong>26px · 400</div><div style="font-family:var(--fd);font-size:26px;font-weight:400;line-height:1.2;color:var(--ink)">The Essential Blazer</div><div class="tt">--text-2xl</div></div>
+    <div class="ts"><div class="tm"><strong>D5 / H4</strong>20px · 400</div><div style="font-family:var(--fd);font-size:20px;font-weight:400;line-height:1.3;color:var(--ink)">New Arrivals <em>— Spring</em></div><div class="tt">--text-lg</div></div>
+  </div>
+  <p class="sub">UI Scale — DM Sans</p>
+  <div>
+    <div class="ts"><div class="tm"><strong>UI LG</strong>17px · 400</div><div style="font-size:17px;line-height:1.6;color:var(--ink)">Crafted for the woman who moves through the world with intention.</div><div class="tt">--text-md</div></div>
+    <div class="ts"><div class="tm"><strong>UI Base</strong>15px · 400</div><div style="font-size:15px;line-height:1.7;color:var(--ink2)">Free shipping on orders over $150. Easy returns within 30 days. Carbon-neutral packaging.</div><div class="tt">--text-base</div></div>
+    <div class="ts"><div class="tm"><strong>UI SM</strong>13px · 400</div><div style="font-size:13px;line-height:1.6;color:var(--ink2)">100% Organic cotton · Machine washable · Available in 6 colours</div><div class="tt">--text-sm</div></div>
+    <div class="ts"><div class="tm"><strong>Label</strong>11px · 500 · UC</div><div style="font-size:11px;font-weight:500;letter-spacing:.10em;text-transform:uppercase;color:var(--ink)">New Arrival &nbsp;·&nbsp; Limited Edition &nbsp;·&nbsp; Add to Bag</div><div class="tt">--text-xs</div></div>
+  </div>
+</div>
+</section>
+
+<!-- BUTTONS -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">03 — Actions</p>
+  <h2 class="sec-title">Button System</h2>
+  <p class="sec-desc">Five variants across four sizes with icon and loading states. All use 8px border-radius and uppercase tracking for the luxury label aesthetic.</p>
+  <p class="sub">Variants</p>
+  <div class="row" style="align-items:center">
+    <div class="col" style="align-items:flex-start"><button class="btn btn-p btn-md">Add to Bag</button><p class="tag">Primary</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-s btn-md">Save to Wishlist</button><p class="tag">Secondary</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-g btn-md">View Details</button><p class="tag">Ghost</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-gold btn-md">Shop Now</button><p class="tag">Gold</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-og btn-md">Members Only</button><p class="tag">Gold Outline</p></div>
+  </div>
+  <p class="sub">Sizes</p>
+  <div class="row" style="align-items:center">
+    <div class="col" style="align-items:flex-start"><button class="btn btn-p btn-sm">Shop Now</button><p class="tag">Small 34px</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-p btn-md">Add to Bag</button><p class="tag">Medium 44px</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-p btn-lg">Proceed to Checkout</button><p class="tag">Large 52px</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-p btn-xl">Begin Your Edit</button><p class="tag">XL 60px</p></div>
+  </div>
+  <p class="sub">States & Special</p>
+  <div class="row" style="align-items:center">
+    <div class="col" style="align-items:flex-start"><button class="btn btn-p btn-md" disabled>Sold Out</button><p class="tag">Disabled</p></div>
+    <div class="col" style="align-items:flex-start"><button class="btn btn-p btn-md btn-ld">Loading</button><p class="tag">Loading</p></div>
+    <div class="col" style="align-items:flex-start">
+      <button class="btn btn-p btn-md" style="width:240px">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" style="flex-shrink:0"><path d="M13 7.5a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0zM7.5 5v5m-2.5-2.5h5"/></svg>
+        Add to Bag
+      </button><p class="tag">With icon</p>
+    </div>
+    <div class="col" style="align-items:flex-start">
+      <button class="btn btn-s btn-ico">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 14s-6-4.5-6-8a6 6 0 0112 0c0 3.5-6 8-6 8z"/></svg>
+      </button><p class="tag">Icon</p>
+    </div>
+    <div class="col" style="align-items:flex-start">
+      <button class="btn btn-gold btn-ico btn-rnd">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h12M8 2l6 6-6 6"/></svg>
+      </button><p class="tag">Round icon</p>
+    </div>
+  </div>
+  <p class="sub">Tags & Status Chips</p>
+  <div class="row">
+    <span class="chip chip-df">New Season</span>
+    <span class="chip chip-gd">✦ Member Exclusive</span>
+    <span class="chip chip-ik">Limited Edition</span>
+    <span class="chip chip-ok">✓ In Stock</span>
+    <span class="chip chip-er">Almost Gone</span>
+  </div>
+</div>
+</section>
+
+<!-- NAVIGATION -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">04 — Navigation</p>
+  <h2 class="sec-title">Navigation System</h2>
+  <p class="sec-desc">Desktop mega-nav with editorial drop panel, breadcrumb trail, and sticky mobile bottom bar. Designed for fast, confident browsing on every device.</p>
+  <p class="sub">Desktop Mega-Nav with Editorial Drop Panel</p>
+  <div class="mnav" style="margin-bottom:32px">
+    <div class="mnav-b">
+      <div class="mlogo">Maison</div>
+      <div class="mni">New In</div>
+      <div class="mni on">Collections</div>
+      <div class="mni">Ready-to-Wear</div>
+      <div class="mni">Accessories</div>
+      <div class="mni" style="color:#9B3A3A">Sale</div>
+      <div style="margin-left:auto;display:flex;gap:20px;align-items:center">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--ink2);cursor:pointer"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M15 15l-3.5-3.5"/></svg>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--ink2);cursor:pointer"><path d="M8 9a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM1 15c0-3 3.13-5 7-5s7 2 7 5"/></svg>
+      </div>
+    </div>
+    <div class="mdrop">
+      <div>
+        <p class="mcl">Clothing</p>
+        <a class="ml">Dresses</a><a class="ml">Tops &amp; Blouses</a><a class="ml">Trousers &amp; Jeans</a><a class="ml">Skirts</a><a class="ml">Coats &amp; Jackets</a>
+        <a class="ml" style="color:var(--gold)">View All →</a>
+      </div>
+      <div>
+        <p class="mcl">By Occasion</p>
+        <a class="ml">Work Edit</a><a class="ml">Weekend Wear</a><a class="ml">Evening</a><a class="ml">Holiday</a><a class="ml">Active</a>
+      </div>
+      <div>
+        <p class="mcl">Trending Now</p>
+        <a class="ml">The Linen Edit</a><a class="ml">Minimal Suiting</a><a class="ml">Soft Tailoring</a><a class="ml">Coastal Calm</a>
+        <a class="ml" style="color:var(--gold)">Shop All →</a>
+      </div>
+      <div>
+        <div class="med">
+          <div class="med-bg"></div>
+          <div class="med-c">
+            <p class="med-el">Spring Edit</p>
+            <p class="med-h">The Quiet Luxe Collection</p>
+            <p class="med-cta">Explore</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="sub">Breadcrumb</p>
+  <nav class="bc" style="margin-bottom:32px">
+    <span class="bci">Home</span><span class="bcs">/</span>
+    <span class="bci">Collections</span><span class="bcs">/</span>
+    <span class="bci">Ready-to-Wear</span><span class="bcs">/</span>
+    <span class="bci cur">Silk Maxi Dress</span>
+  </nav>
+  <p class="sub">Mobile Bottom Navigation Bar</p>
+  <div style="display:flex;justify-content:flex-start">
+    <div class="mbnav">
+      <div class="mb-i on">
+        <div class="mb-ico"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10L10 3l7 7v8H13v-4H7v4H3v-8z"/></svg></div>
+        <span class="mb-l">Home</span>
+      </div>
+      <div class="mb-i">
+        <div class="mb-ico"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M19 19l-4.5-4.5"/></svg></div>
+        <span class="mb-l">Search</span>
+      </div>
+      <div class="mb-i">
+        <div class="mb-ico">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 18s-7-5-7-9a7 7 0 0114 0c0 4-7 9-7 9z"/></svg>
+          <div class="notif"></div>
+        </div>
+        <span class="mb-l">Saved</span>
+      </div>
+      <div class="mb-i">
+        <div class="mb-ico"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h15l-1.5 10H4.5L3 4zM7 4V3a3 3 0 016 0v1"/></svg></div>
+        <span class="mb-l">Bag</span>
+      </div>
+      <div class="mb-i">
+        <div class="mb-ico"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 11a4 4 0 100-8 4 4 0 000 8zM2 19c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+        <span class="mb-l">Account</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PRODUCT CARDS -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">05 — Commerce</p>
+  <h2 class="sec-title">Product Cards</h2>
+  <p class="sec-desc">Cards with Quick Add overlay, wishlist interaction, colour dot selectors, and sale/new/sold-out badge states. Hover any card to reveal the size selector.</p>
+  <div class="pg">
+    <div class="pc">
+      <div class="pi">
+        <div class="pph">Maison</div>
+        <span class="pbadge b-new">New</span>
+        <div class="pwish" onclick="this.classList.toggle('on')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 12s-5-3.5-5-7a5 5 0 0110 0c0 3.5-5 7-5 7z"/></svg></div>
+        <div class="pqa"><p class="qa-l">Quick Add</p><div class="qa-sz"><div class="qa-s">XS</div><div class="qa-s">S</div><div class="qa-s">M</div><div class="qa-s">L</div><div class="qa-s">XL</div></div></div>
+      </div>
+      <div class="pinfo">
+        <p class="pbrand">Maison Studio</p>
+        <p class="pname">Fluid Silk Maxi Dress</p>
+        <div class="ppricing"><span class="pprice">$485</span></div>
+        <div class="pdots">
+          <div class="dot on" style="background:#E8DDD0"></div>
+          <div class="dot" style="background:#1A1918"></div>
+          <div class="dot" style="background:#7A6A8A"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pc">
+      <div class="pi" style="background:#EDE9E0">
+        <div class="pph" style="color:#C5B99E">Atelier</div>
+        <span class="pbadge b-sale">−30%</span>
+        <div class="pwish" onclick="this.classList.toggle('on')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 12s-5-3.5-5-7a5 5 0 0110 0c0 3.5-5 7-5 7z"/></svg></div>
+        <div class="pqa"><p class="qa-l">Quick Add</p><div class="qa-sz"><div class="qa-s">XS</div><div class="qa-s">S</div><div class="qa-s">M</div></div></div>
+      </div>
+      <div class="pinfo">
+        <p class="pbrand">Archive</p>
+        <p class="pname">Relaxed Wool Blazer</p>
+        <div class="ppricing"><span class="pprice psale">$294</span><span class="porig">$420</span></div>
+        <div class="pdots"><div class="dot on" style="background:#8A7E6A"></div><div class="dot" style="background:#3A3530"></div></div>
+      </div>
+    </div>
+    <div class="pc">
+      <div class="pi" style="background:#F0EAE2">
+        <div class="pph" style="color:#D4C9B8">Etoile</div>
+        <div class="pwish" onclick="this.classList.toggle('on')"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 12s-5-3.5-5-7a5 5 0 0110 0c0 3.5-5 7-5 7z"/></svg></div>
+        <div class="pqa"><p class="qa-l">Quick Add</p><div class="qa-sz"><div class="qa-s">XS</div><div class="qa-s">S</div><div class="qa-s">M</div><div class="qa-s">L</div></div></div>
+      </div>
+      <div class="pinfo">
+        <p class="pbrand">Signature</p>
+        <p class="pname">Cashmere V-Neck Knit</p>
+        <div class="ppricing"><span class="pprice">$320</span></div>
+        <div class="pdots">
+          <div class="dot on" style="background:#F0E6D3"></div>
+          <div class="dot" style="background:#C5B39A"></div>
+          <div class="dot" style="background:#8A8070"></div>
+          <div class="dot" style="background:#3A3530"></div>
+        </div>
+      </div>
+    </div>
+    <div class="pc">
+      <div class="pi" style="background:#E8E4DC">
+        <div class="pph" style="color:#C9C3B5">Capsule</div>
+        <span class="pbadge b-sold">Sold Out</span>
+        <div class="pqa" style="background:var(--surface)"><p class="qa-l" style="color:var(--ink3)">Notify Me</p><button class="btn btn-s btn-sm" style="width:100%;border-radius:var(--r-sm);font-size:10px">Join Waitlist</button></div>
+      </div>
+      <div class="pinfo">
+        <p class="pbrand">Limited Edition</p>
+        <p class="pname">Tailored Linen Trousers</p>
+        <div class="ppricing"><span class="pprice" style="color:var(--ink3)">$260</span></div>
+        <div class="pdots">
+          <div class="dot" style="background:#D4C5A0;opacity:.5"></div>
+          <div class="dot on" style="background:#1A1918;opacity:.5"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FORMS -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">06 — Inputs & Forms</p>
+  <h2 class="sec-title">Form Components</h2>
+  <p class="sec-desc">Inputs with validation states, size selectors, quantity steppers, and a full checkout layout. Designed for a frictionless path to purchase.</p>
+  <p class="sub">Input States</p>
+  <div class="g3" style="margin-bottom:32px">
+    <div class="field"><label class="flabel">First name <span class="freq">*</span></label><input class="input" type="text" placeholder="Sophie"><span class="fhint">As it appears on your payment card</span></div>
+    <div class="field"><label class="flabel">Email address</label><div class="iwi"><input class="input ok" type="email" value="sophie@example.com"><span class="iico"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#4A7C59" stroke-width="1.5"><path d="M2 7l4 4 7-7"/></svg></span></div><span class="fhint" style="color:var(--success)">✓ Valid email address</span></div>
+    <div class="field"><label class="flabel">Promo code</label><div class="iwi"><input class="input er" type="text" value="SUMMER10X"><span class="iico"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#9B3A3A" stroke-width="1.5"><path d="M7 4v4m0 2h.01M13 7A6 6 0 111 7a6 6 0 0112 0z"/></svg></span></div><span class="ferr">This code has expired or is invalid</span></div>
+    <div class="field"><label class="flabel">Country</label><div class="selw"><select class="input"><option>United Kingdom</option><option>United States</option><option>France</option><option>United Arab Emirates</option></select></div></div>
+    <div class="field"><label class="flabel">Order notes</label><textarea class="input ta" placeholder="Gift message or delivery instructions…"></textarea></div>
+    <div>
+      <div class="field" style="margin-bottom:16px">
+        <label class="flabel">Preferences</label>
+        <div class="ck-g">
+          <label class="ck-i on"><div class="ck-b"></div>Email newsletters &amp; lookbooks</label>
+          <label class="ck-i on"><div class="ck-b"></div>Early access to new collections</label>
+          <label class="ck-i"><div class="ck-b"></div>SMS order updates</label>
+        </div>
+      </div>
+      <div class="field">
+        <label class="flabel">Delivery</label>
+        <div class="ck-g">
+          <label class="ck-i on"><div class="rd-c"></div>Standard — Free (3–5 days)</label>
+          <label class="ck-i"><div class="rd-c"></div>Express — £8.50 (next day)</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="sub">Product Selectors</p>
+  <div class="row" style="align-items:flex-start;margin-bottom:32px">
+    <div>
+      <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px">Size — UK</p>
+      <div class="sz-g">
+        <div class="sz off">6</div><div class="sz">8</div><div class="sz on">10</div><div class="sz">12</div><div class="sz">14</div><div class="sz">16</div><div class="sz off">18</div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px">Quantity</p>
+      <div class="qty">
+        <button class="qty-btn" onclick="var v=this.nextElementSibling;v.textContent=Math.max(1,+v.textContent-1)">−</button>
+        <div class="qty-v">1</div>
+        <button class="qty-btn" onclick="var v=this.previousElementSibling;v.textContent=+v.textContent+1">+</button>
+      </div>
+    </div>
+  </div>
+  <p class="sub">Checkout Form — Full Layout</p>
+  <div class="cof">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p class="co-st">Delivery</p>
+      <div class="fr">
+        <div class="field"><label class="flabel">First name <span class="freq">*</span></label><input class="input" type="text" placeholder="Sophie"></div>
+        <div class="field"><label class="flabel">Last name <span class="freq">*</span></label><input class="input" type="text" placeholder="Martin"></div>
+      </div>
+      <div class="field"><label class="flabel">Address <span class="freq">*</span></label><input class="input" type="text" placeholder="Start typing your address…"></div>
+      <div class="fr">
+        <div class="field"><label class="flabel">City</label><input class="input" type="text" placeholder="London"></div>
+        <div class="field"><label class="flabel">Postcode <span class="freq">*</span></label><input class="input" type="text" placeholder="SW1A 1AA"></div>
+      </div>
+      <div class="field"><label class="flabel">Country <span class="freq">*</span></label><div class="selw"><select class="input"><option>United Kingdom</option><option>United States</option><option>France</option></select></div></div>
+      <div class="sep" style="margin:0"></div>
+      <p class="co-st">Payment</p>
+      <div class="field"><label class="flabel">Card number <span class="freq">*</span></label><div class="iwi"><input class="input" type="text" placeholder="1234  5678  9012  3456"><span class="iico" style="font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--gold)">VISA</span></div></div>
+      <div class="fr">
+        <div class="field"><label class="flabel">Expiry</label><input class="input" type="text" placeholder="MM / YY"></div>
+        <div class="field"><label class="flabel">CVV</label><input class="input" type="text" placeholder="•••"></div>
+      </div>
+      <button class="btn btn-p btn-lg" style="width:100%;margin-top:8px">Place Order →</button>
+      <p style="font-size:11px;color:var(--ink3);text-align:center;line-height:1.5">🔒 Secured by 256-bit SSL. We never store card details.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <p class="ot">Your Order</p>
+      <div class="oi"><div class="oimg">Img</div><div style="flex:1"><p class="on2">Fluid Silk Maxi Dress</p><p class="om">Ivory · Size M · Qty 1</p></div><div class="opr">$485</div></div>
+      <div class="oi"><div class="oimg">Img</div><div style="flex:1"><p class="on2">Cashmere V-Neck Knit</p><p class="om">Camel · Size S · Qty 1</p></div><div class="opr">$320</div></div>
+      <div class="field" style="margin-top:8px"><div style="display:flex;gap:8px"><input class="input" type="text" placeholder="Promo code" style="flex:1"><button class="btn btn-s btn-md">Apply</button></div></div>
+      <div class="otots">
+        <div class="or"><span>Subtotal</span><span>$805</span></div>
+        <div class="or"><span>Shipping</span><span style="color:var(--success)">Free</span></div>
+        <div class="or"><span>Tax</span><span>$64.40</span></div>
+        <div class="otr"><span>Total</span><span>$869.40</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TRUST & CRO -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">07 — CRO Patterns</p>
+  <h2 class="sec-title">Trust & Conversion</h2>
+  <p class="sec-desc">Whitespace-respecting trust signals, star ratings, and a newsletter capture strip. Placed at friction points to support purchase confidence.</p>
+  <p class="sub">Trust Bar</p>
+  <div class="tbar" style="margin-bottom:32px">
+    <div class="ti"><div class="tico">✦</div><div><p class="ttitle">Free Shipping</p><p class="tsub">On all orders over $150</p></div></div>
+    <div class="ti"><div class="tico">↩</div><div><p class="ttitle">30-Day Returns</p><p class="tsub">Free, no questions asked</p></div></div>
+    <div class="ti"><div class="tico">🔒</div><div><p class="ttitle">Secure Checkout</p><p class="tsub">SSL · Apple Pay · Klarna</p></div></div>
+    <div class="ti"><div class="tico">◇</div><div><p class="ttitle">Sustainable</p><p class="tsub">Carbon-neutral delivery</p></div></div>
+  </div>
+  <p class="sub">Review Component</p>
+  <div style="padding:24px;background:var(--surface);border-radius:var(--r-lg);border:1px solid var(--border);margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:32px;margin-bottom:24px">
+      <div style="text-align:center">
+        <div style="font-family:var(--fd);font-size:52px;font-weight:400;color:var(--ink);line-height:1">4.8</div>
+        <div class="stars" style="justify-content:center;margin:8px 0"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p style="font-size:11px;color:var(--ink3)">128 reviews</p>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:11px;color:var(--ink3);width:16px">5</span><div style="flex:1;height:5px;background:var(--border);border-radius:9999px;overflow:hidden"><div style="height:100%;width:72%;background:var(--gold);border-radius:9999px"></div></div><span style="font-size:11px;color:var(--ink3);width:28px">72%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:11px;color:var(--ink3);width:16px">4</span><div style="flex:1;height:5px;background:var(--border);border-radius:9999px;overflow:hidden"><div style="height:100%;width:19%;background:var(--gold);border-radius:9999px"></div></div><span style="font-size:11px;color:var(--ink3);width:28px">19%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:11px;color:var(--ink3);width:16px">3</span><div style="flex:1;height:5px;background:var(--border);border-radius:9999px;overflow:hidden"><div style="height:100%;width:6%;background:var(--gold);border-radius:9999px"></div></div><span style="font-size:11px;color:var(--ink3);width:28px">6%</span></div>
+        <div style="display:flex;align-items:center;gap:12px"><span style="font-size:11px;color:var(--ink3);width:16px">2</span><div style="flex:1;height:5px;background:var(--border);border-radius:9999px;overflow:hidden"><div style="height:100%;width:2%;background:var(--gold);border-radius:9999px"></div></div><span style="font-size:11px;color:var(--ink3);width:28px">2%</span></div>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:24px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink2);margin-bottom:8px">
+        <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <span style="font-weight:500;color:var(--ink)">Charlotte M.</span>
+        <span style="color:var(--ink3)">Verified purchase</span>
+      </div>
+      <p style="font-family:var(--fd);font-size:15px;font-style:italic;color:var(--ink2);line-height:1.6">"The fabric drapes beautifully and the cut is impeccable. I sized down as suggested and it fits perfectly. Already thinking about getting the navy."</p>
+      <p style="font-size:11px;color:var(--ink3);margin-top:8px">Silk Maxi Dress · Ivory · Size 10 UK</p>
+    </div>
+  </div>
+  <p class="sub">Newsletter Capture</p>
+  <div class="nl">
+    <div class="nl-t">
+      <p class="nl-ey">Join the Edit</p>
+      <p class="nl-h">First access to new<br>collections &amp; private sales</p>
+      <p class="nl-s">Unsubscribe any time. We only write when it's worth your attention.</p>
+    </div>
+    <div class="nl-f">
+      <input class="nl-i" type="email" placeholder="Your email address">
+      <button class="btn btn-gold btn-md">Subscribe</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SPACING -->
+<section class="sec">
+<div class="wrap">
+  <p class="eyebrow">08 — Foundation</p>
+  <h2 class="sec-title">Spacing &amp; Tokens</h2>
+  <p class="sec-desc">An 8px base spacing scale and a CSS variable reference. Consistent application of these tokens creates visual rhythm across every component.</p>
+  <p class="sub">Spacing Scale</p>
+  <div class="spr" style="margin-bottom:32px">
+    <div class="spi"><div class="spb" style="width:4px;height:4px"></div><p class="spl">4px</p></div>
+    <div class="spi"><div class="spb" style="width:8px;height:8px"></div><p class="spl">8px</p></div>
+    <div class="spi"><div class="spb" style="width:12px;height:12px"></div><p class="spl">12px</p></div>
+    <div class="spi"><div class="spb" style="width:16px;height:16px"></div><p class="spl">16px</p></div>
+    <div class="spi"><div class="spb" style="width:20px;height:20px"></div><p class="spl">20px</p></div>
+    <div class="spi"><div class="spb" style="width:24px;height:24px"></div><p class="spl">24px</p></div>
+    <div class="spi"><div class="spb" style="width:32px;height:32px"></div><p class="spl">32px</p></div>
+    <div class="spi"><div class="spb" style="width:40px;height:40px"></div><p class="spl">40px</p></div>
+    <div class="spi"><div class="spb" style="width:48px;height:48px"></div><p class="spl">48px</p></div>
+    <div class="spi"><div class="spb" style="width:64px;height:64px"></div><p class="spl">64px</p></div>
+    <div class="spi"><div class="spb" style="width:80px;height:80px"></div><p class="spl">80px</p></div>
+  </div>
+  <p class="sub">Border Radius</p>
+  <div class="row" style="margin-bottom:32px">
+    <div class="spi"><div class="spb" style="width:48px;height:48px;border-radius:4px"></div><p class="spl">r-sm 4px</p></div>
+    <div class="spi"><div class="spb" style="width:48px;height:48px;border-radius:8px"></div><p class="spl">r-md 8px</p></div>
+    <div class="spi"><div class="spb" style="width:48px;height:48px;border-radius:12px"></div><p class="spl">r-lg 12px</p></div>
+    <div class="spi"><div class="spb" style="width:48px;height:48px;border-radius:9999px"></div><p class="spl">pill</p></div>
+  </div>
+  <p class="sub">CSS Variable Quick Reference</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--ink2)">--fd: 'Playfair Display', Georgia, serif</div>
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--ink2)">--fu: 'DM Sans', system-ui, sans-serif</div>
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--ink2)">--canvas: #FAF8F3 (page background)</div>
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--ink2)">--ink: #1A1918 (primary text)</div>
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--gold)">--gold: #B8955A (accent)</div>
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--ink2)">--r-md: 8px (button radius)</div>
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--ink2)">--ease: cubic-bezier(0.16,1,0.3,1)</div>
+    <div style="font-size:11px;padding:12px 16px;background:var(--surface);border-radius:var(--r-sm);font-family:monospace;color:var(--ink2)">transition: all 220ms var(--ease)</div>
+  </div>
+</div>
+</section>
+
+<div class="ft">
+<div class="ft-i">
+  <div class="ft-logo">Maison</div>
+  <div class="ft-m">Design System v1.0 &nbsp;·&nbsp; <span class="ft-g">8 Sections · 42 Components · WCAG AA</span></div>
+  <div class="ft-m">Playfair Display + DM Sans</div>
+</div>
+</div>
+
+</body>
+</html>
